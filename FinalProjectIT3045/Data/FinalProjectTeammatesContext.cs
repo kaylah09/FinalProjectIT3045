@@ -11,6 +11,8 @@ namespace FinalProjectIT3045.Data
 
         public DbSet<Pet> Pets { get; set; }
 
+        public DbSet<FavoriteBook> FavoriteBooks { get; set; }
+        public DbSet<TeamMember> TeamMembers { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -25,8 +27,20 @@ namespace FinalProjectIT3045.Data
 
             builder.Entity<Pet>().HasData(
                 new Pet { Id = 1, Species = "Dog", Breed = "Husky", Name = "Jacob", DateOfBirth = null },
-                new Pet { Id = 2, Species = "Dog", Breed = "Chihuahua", Name = "Brandy", DateOfBirth = null }
+                new Pet { Id = 2, Species = "Dog", Breed = "Chihuahua", Name = "Brandy", DateOfBirth = null },
+                new Pet { Id = 3, Species = "cat", Breed = "DSH", Name = "Dice", DateOfBirth = new DateOnly(2023, 05, 20) }
                 //Zoe - Feel free to add any pets you might have here!
+            );
+            builder.Entity<FavoriteBook>().HasData(
+                new FavoriteBook { Id = 1, Title = "The Great Gatsby", Author = "F. Scott Fitzgerald", Genre = "Fiction", PublicationDate = new DateTime(1925, 04, 10) },
+                new FavoriteBook { Id = 2, Title = "To Kill a Mockingbird", Author = "Harper Lee", Genre = "Fiction", PublicationDate = new DateTime(1960, 7, 11) },
+                new FavoriteBook { Id = 3, Title = "1984", Author = "George Orwell", Genre = "Dystopian", PublicationDate = new DateTime(1948, 06, 8) }
+                // Add more favorite books as needed
+            );
+            builder.Entity<TeamMember>().HasData(
+                new TeamMember { Id = 1, FirstName = "Kaylah", LastName = "Hammond", CollegeProgram = "Information Technology", YearInProgram = "Senior" },
+                new TeamMember { Id = 2, FirstName = "Jane", LastName = "Smith", CollegeProgram = "Psychology", YearInProgram = "Junior" }
+                // Add more team members as needed
             );
         }
     }
