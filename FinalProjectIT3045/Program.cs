@@ -11,7 +11,11 @@ builder.Services.AddDbContext<FinalProjectTeammatesContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("FinalProjectTeammatesContext")));
 
 var app = builder.Build();
-
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<FinalProjectTeammatesContext>();
+    context.Database.Migrate();
+}
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
