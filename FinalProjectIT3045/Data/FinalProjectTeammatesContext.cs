@@ -38,7 +38,7 @@ namespace FinalProjectIT3045.Data
                 // Add more favorite books as needed
             );
             builder.Entity<TeamMember>().HasData(
-                new TeamMember { Id = 1, FirstName = "Kaylah", LastName = "Hammond", CollegeProgram = "Information Technology", YearInProgram = "Senior" },
+                new TeamMember { Id = 1, FirstName = "Kaylah", LastName = "Hammond", CollegeProgram = "Information Technology", YearInProgram = "Senior" , DateOfBirth = new DateTime(2003, 09, 02) },
                 new TeamMember { Id = 2, FirstName = "Zoe", LastName = "Aspenns", DateOfBirth = new DateTime(2006, 09, 25), CollegeProgram = "Information Technology", YearInProgram = "Sophomore" }
                 // Add more team members as needed
             );
