@@ -15,28 +15,27 @@ namespace FinalProjectIT3045.Controllers
             _context = context;
         }
 
-        [HttpGet("{id?}")]
-        public async Task<IActionResult> GetTeamMember(int? id)
-        {
-            
 
-            if (id == 0 || id == null)
+
+        [HttpGet]
+        public async Task<IActionResult> GetTeamMember([FromQuery] int? id)
+        {
+            if (id == null || id == 0)
             {
                 var teamMembers = await _context.TeamMembers
-                .Take(5)
-                .ToListAsync();
+                    .Take(5)
+                    .ToListAsync();
 
                 return Ok(teamMembers);
             }
 
             var teamMember = await _context.TeamMembers.FindAsync(id);
-            // if the team member with the provided id is not found, return a 404 Not Found response
 
             if (teamMember == null)
             {
                 return NotFound();
             }
-            // otherwise, return the team member     with the provided id
+
             return Ok(teamMember);
         }
 

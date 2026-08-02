@@ -18,8 +18,8 @@ namespace FinalProjectIT3045.Controllers
 
 
 
-        [HttpGet("{id?}")]
-        public async Task<IActionResult> GetFavoriteBook(int? id)
+        [HttpGet]
+        public async Task<IActionResult> GetFavoriteBook([FromQuery] int? id)
         {
             // if an id is not provided, return the first 5 favorite books
 
@@ -42,6 +42,7 @@ namespace FinalProjectIT3045.Controllers
             // otherwise, return the favorite book with the provided id
             return Ok(favoriteBook);
         }
+
 
         [HttpPost]
         public async Task<IActionResult> CreateFavoriteBook([FromBody] FavoriteBook favoriteBook)
