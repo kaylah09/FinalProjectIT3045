@@ -13,9 +13,9 @@ public class CollegeCoursesController : ControllerBase
         _context = context;
     }
 
-    // GET: api/collegecourses/5
-    [HttpGet("{id?}")]
-    public async Task<ActionResult> GetCollegeCourse(int? id)
+    // GET: api/collegecourses?id=5
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<CollegeCourse>>> GetCollegeCourse(int? id)
     {
         if (id == 0 || id == null)
         {

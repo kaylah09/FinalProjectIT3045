@@ -14,8 +14,8 @@ public class PetsController : ControllerBase
     }
 
     // GET: api/pets/5
-    [HttpGet("{id?}")]
-    public async Task<ActionResult> GetPet(int? id)
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<Pet>>> GetPet(int? id)
     {
         if (id == 0 || id == null)
         {
