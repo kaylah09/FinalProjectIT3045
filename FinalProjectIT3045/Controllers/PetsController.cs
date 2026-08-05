@@ -17,22 +17,21 @@ public class PetsController : ControllerBase
     [HttpGet("{id?}")]
     public async Task<ActionResult> GetPet(int? id)
     {
-        if (id != null && id != 0)
-        {
-            var pet = await _context.Pets.FindAsync(id);
-
-            if (pet == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(pet);
-        } else
+        if (id == 0 || id == null)
         {
             var pets = await _context.Pets.Take(5).ToListAsync();
 
             return Ok(pets);
         }
+
+        var pet = await _context.Pets.FindAsync(id);
+
+        if (pet == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(pet);
     }
 
     // PUT: api/pets/5
