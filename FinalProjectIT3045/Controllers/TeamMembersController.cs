@@ -47,21 +47,26 @@ namespace FinalProjectIT3045.Controllers
             return CreatedAtAction(nameof(GetTeamMember), new { id = teamMember.Id }, teamMember);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateTeamMember(int id, [FromBody] TeamMember teamMember)
+        [HttpPut]
+        public async Task<IActionResult> UpdateTeamMember( [FromBody] TeamMember teamMember)
         {
-            if (id != teamMember.Id)
-            {
-                return BadRequest();
-            }
-            _context.Entry(teamMember).State = EntityState.Modified;
+            var existingTeamMember = await _context.TeamMembers.FindAsync(teamMember.Id);
+
+
+            if (existingTeamMember == null)
+            {  return NotFound(); }
+
+            _context.Entry(existingTeamMember).CurrentValues.SetValues(teamMember);
+
+           
+  
             try
             {
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TeamMemberExists(id))
+                if (!TeamMemberExists(existingTeamMember.Id))
                 {
                     return NotFound();
                 }

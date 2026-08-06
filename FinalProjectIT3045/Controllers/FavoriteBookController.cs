@@ -52,21 +52,25 @@ namespace FinalProjectIT3045.Controllers
             return CreatedAtAction(nameof(GetFavoriteBook), new { id = favoriteBook.Id }, favoriteBook);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateFavoriteBook(int id, [FromBody] FavoriteBook favoriteBook)
+        [HttpPut]
+        public async Task<IActionResult> UpdateFavoriteBook([FromBody] FavoriteBook favoriteBook)
         {
-            if (id != favoriteBook.Id)
+           var existingBook = await _context.FavoriteBooks.FindAsync(favoriteBook.Id);
+
+            if (existingBook == null)
             {
-                return BadRequest();
+                return NotFound();
             }
-            _context.Entry(favoriteBook).State = EntityState.Modified;
+            
+            _context.Entry(existingBook).CurrentValues.SetValues(favoriteBook);
+
             try
             {
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!FavoriteBookExists(id))
+                if (!FavoriteBookExists(existingBook.Id))
                 {
                     return NotFound();
                 }
@@ -77,6 +81,7 @@ namespace FinalProjectIT3045.Controllers
             }
             return NoContent();
         }
+
 
         private bool FavoriteBookExists(int id)
         {
