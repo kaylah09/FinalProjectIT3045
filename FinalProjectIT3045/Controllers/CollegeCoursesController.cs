@@ -13,39 +13,38 @@ public class CollegeCoursesController : ControllerBase
         _context = context;
     }
 
-    // GET: api/collegecourses/5
-    [HttpGet("{id?}")]
-    public async Task<ActionResult> GetCollegeCourse(int? id)
+    // GET: api/collegecourses?id=5
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<CollegeCourse>>> GetCollegeCourse(int? id)
     {
-        if (id != null && id != 0)
-        {
-            var collegeCourse = await _context.CollegeCourses.FindAsync(id);
-
-            if (collegeCourse == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(collegeCourse);
-        } else
+        if (id == 0 || id == null)
         {
             var collegeCourses = await _context.CollegeCourses.Take(5).ToListAsync();
 
             return Ok(collegeCourses);
         }
+
+        var collegeCourse = await _context.CollegeCourses.FindAsync(id);
+
+        if (collegeCourse == null)
+        {
+             return NotFound();
+        }
+
+        return Ok(collegeCourse);
     }
 
     // PUT: api/collegecourses/5
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutCollegeCourse(int id, CollegeCourse collegecourse)
+    public async Task<IActionResult> PutCollegeCourse(int id, CollegeCourse collegeCourse)
     {
-        if (id != collegecourse.Id)
+        if (id != collegeCourse.Id)
         {
             return BadRequest();
         }
 
-        _context.Entry(collegecourse).State = EntityState.Modified;
+        _context.Entry(collegeCourse).State = EntityState.Modified;
 
         try
         {
@@ -69,12 +68,12 @@ public class CollegeCoursesController : ControllerBase
     // POST: api/collegecourses
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPost]
-    public async Task<ActionResult<CollegeCourse>> PostCollegeCourse(CollegeCourse collegecourse)
+    public async Task<ActionResult<CollegeCourse>> PostCollegeCourse(CollegeCourse collegeCourse)
     {
-        _context.CollegeCourses.Add(collegecourse);
+        _context.CollegeCourses.Add(collegeCourse);
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction(nameof(GetCollegeCourse), new { id = collegecourse.Id }, collegecourse);
+        return CreatedAtAction(nameof(GetCollegeCourse), new { id = collegeCourse.Id }, collegeCourse);
     }
 
     // DELETE: api/collegecourses/5

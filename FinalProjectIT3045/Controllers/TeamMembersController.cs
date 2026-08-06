@@ -15,10 +15,8 @@ namespace FinalProjectIT3045.Controllers
             _context = context;
         }
 
-
-
         [HttpGet]
-        public async Task<IActionResult> GetTeamMember([FromQuery] int? id)
+        public async Task<ActionResult<IEnumerable<TeamMember>>> GetTeamMember([FromQuery] int? id)
         {
             if (id == null || id == 0)
             {
@@ -40,7 +38,7 @@ namespace FinalProjectIT3045.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateTeamMember([FromBody] TeamMember teamMember)
+        public async Task<ActionResult<TeamMember>> CreateTeamMember([FromBody] TeamMember teamMember)
         {
             _context.TeamMembers.Add(teamMember);
             await _context.SaveChangesAsync();

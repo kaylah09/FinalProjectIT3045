@@ -16,10 +16,8 @@ namespace FinalProjectIT3045.Controllers
             _context = context;
         }
 
-
-
         [HttpGet]
-        public async Task<IActionResult> GetFavoriteBook([FromQuery] int? id)
+        public async Task<ActionResult<IEnumerable<FavoriteBook>>> GetFavoriteBook([FromQuery] int? id)
         {
             // if an id is not provided, return the first 5 favorite books
 
@@ -45,7 +43,7 @@ namespace FinalProjectIT3045.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> CreateFavoriteBook([FromBody] FavoriteBook favoriteBook)
+        public async Task<ActionResult<FavoriteBook>> CreateFavoriteBook([FromBody] FavoriteBook favoriteBook)
         {
             _context.FavoriteBooks.Add(favoriteBook);
             await _context.SaveChangesAsync();
